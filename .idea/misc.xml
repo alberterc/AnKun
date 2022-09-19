@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/Coding/AnKun/app/src/main/res/drawable/popupmenu_background.xml" value="0.37777777777777777" />
+        <entry key="..\:/Coding/AnKun/app/src/main/res/drawable/top_toolbar_background.xml" value="0.37777777777777777" />
+        <entry key="..\:/Coding/AnKun/app/src/main/res/layout/activity_anime_details.xml" value="0.25" />
+        <entry key="..\:/Coding/AnKun/app/src/main/res/layout/activity_anime_episode_video.xml" value="0.25" />
+        <entry key="..\:/Coding/AnKun/app/src/main/res/layout/activity_latest_list.xml" value="0.33" />
+        <entry key="..\:/Coding/AnKun/app/src/main/res/layout/activity_main.xml" value="0.3378623188405797" />
+        <entry key="..\:/Coding/AnKun/app/src/main/res/layout/exo_custom_styled_player_view.xml" value="0.1884498480243161" />
+        <entry key="..\:/Coding/AnKun/app/src/main/res/layout/exo_styled_player_control_view.xml" value="0.348731884057971" />
+        <entry key="..\:/Coding/AnKun/app/src/main/res/layout/item_anime.xml" value="0.5" />
+        <entry key="..\:/Coding/AnKun/app/src/main/res/layout/item_anime_episode.xml" value="0.25" />
+        <entry key="..\:/Coding/AnKun/app/src/main/res/layout/item_genre.xml" value="0.5" />
+        <entry key="..\:/Coding/AnKun/app/src/main/res/menu/latest_release_menu.xml" value="0.40208333333333335" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="11" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/build/classes" />
+  </component>
+  <component name="ProjectType">
+    <option name="id" value="Android" />
+  </component>
+</project>
