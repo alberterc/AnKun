@@ -45,17 +45,14 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
 
-    // jackson module for object mapper to be used to create json array
-    implementation 'com.fasterxml.jackson.module:jackson-module-kotlin:2.13.3'
+    // https://mvnrepository.com/artifact/org.apache.commons/commons-lang3
+    implementation 'org.apache.commons:commons-lang3:3.12.0'
 
     // jsoup HTML parser library @ https://jsoup.org/
     implementation 'org.jsoup:jsoup:1.15.3'
 
     // picasso for image loading from url
     implementation 'com.squareup.picasso:picasso:2.8'
-
-    // htmlunit for web scraping
-    implementation 'net.sourceforge.htmlunit:htmlunit-android:2.64.0'
 
     // exoplayer (HLS only) for parsing m3u8 video streaming
     implementation 'com.google.android.exoplayer:exoplayer-core:2.18.1'

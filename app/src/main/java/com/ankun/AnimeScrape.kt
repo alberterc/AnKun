@@ -2,29 +2,20 @@ package com.ankun
 
 import android.app.Activity
 import android.os.AsyncTask
-import android.util.Log
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.core.view.doOnLayout
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.ankun.adapter.AnimeEpisodesAdapter
 import com.ankun.adapter.AnimeGenreAdapter
 import com.ankun.adapter.AnimeLatestReleaseAdapter
-import com.fasterxml.jackson.core.util.DefaultIndenter
-import com.fasterxml.jackson.core.util.DefaultPrettyPrinter
-import com.fasterxml.jackson.core.util.DefaultPrettyPrinter.Indenter
-import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.google.android.exoplayer2.ExoPlayer
 import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.trackselection.DefaultTrackSelector
 import com.google.android.exoplayer2.ui.StyledPlayerView
 import com.google.android.material.appbar.MaterialToolbar
 import com.squareup.picasso.Picasso
-import org.json.JSONArray
-import org.json.JSONException
 import org.jsoup.Jsoup
-import java.io.*
 import java.lang.ref.WeakReference
 import java.net.URL
 
@@ -35,54 +26,6 @@ class AnimeScrape(context: Activity) {
     private var activityReference = WeakReference(context)
     private var animeEpisodesList: List<List<String>> = mutableListOf()
     lateinit var vidPlayer: ExoPlayer
-
-    // Setup a pretty printer with an indenter (indenter has 4 spaces in this case)
-    // found from stackoverflow
-    private val indent: Indenter = DefaultIndenter("    ", DefaultIndenter.SYS_LF)
-
-    private fun writeJsonFile(list: MutableList<Map<String, Any>>, fileName: String) {
-        val printer = DefaultPrettyPrinter()
-        printer.indentObjectsWith(indent)
-        printer.indentArraysWith(indent)
-        // create a new json array
-        val jsonArray = jacksonObjectMapper().writer(printer).writeValueAsString(list)
-
-        // create a new file
-        val file = File(activityReference.get()!!.applicationContext.filesDir, fileName)
-        // write into the file with the json array
-        try {
-            val fileWriter = FileWriter(file)
-            val bufferedWriter = BufferedWriter(fileWriter)
-            bufferedWriter.write(jsonArray.toString())
-            bufferedWriter.close()
-        } catch (ignored: IOException) {}
-    }
-
-    private fun readJsonFile(fileName: String): JSONArray? {
-        // get file reference
-        val file = File(activityReference.get()!!.applicationContext.filesDir, fileName)
-
-        // read file with the json array
-        try {
-            val fileReader = FileReader(file)
-            val bufferedReader = BufferedReader(fileReader)
-            val stringBuilder = StringBuilder()
-            var line = bufferedReader.readLine()
-            while (line != null) {
-                stringBuilder.append(line).append("\n")
-                line = bufferedReader.readLine()
-            }
-            bufferedReader.close()
-
-            // get title
-            val jsonString = stringBuilder.toString()
-            return JSONArray(jsonString)
-        }
-        catch (ignored: JSONException) {}
-        catch (ignored: IOException) {}
-
-        return null
-    }
 
     inner class GetLatestList : AsyncTask<Void, Void, Void>() {
         private var latestListPage = "1" // anime list page starts from 1
