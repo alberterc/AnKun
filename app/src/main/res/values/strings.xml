@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">AnKun</string>
+    <string name="search_hint">Search Anime...</string>
 </resources>
