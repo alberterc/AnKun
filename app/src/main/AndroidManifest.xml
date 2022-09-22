@@ -12,14 +12,13 @@
             android:supportsRtl="true"
             android:theme="@style/Theme.AnKun">
         <activity
-                android:name=".AnimeEpisodeVideo"
-                android:configChanges="orientation|screenSize"
+                android:name=".MostPopularYearly"
                 android:exported="true"/>
         <activity
-                android:name=".AnimeDetails"
+                android:name=".SearchResultList"
                 android:exported="true"/>
         <activity
-                android:name=".LatestList"
+                android:name=".MainMenu"
                 android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -27,6 +26,19 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+        <activity
+                android:name=".anime.AnimeEpisodeVideo"
+                android:configChanges="orientation|screenSize"
+                android:exported="true"/>
+        <activity
+                android:name=".anime.AnimeDetails"
+                android:exported="true"/>
+        <activity
+                android:name=".LatestListSubbed"
+                android:exported="true"/>
+        <activity
+                android:name=".LatestListDubbed"
+                android:exported="true"/>
     </application>
 
 </manifest>
