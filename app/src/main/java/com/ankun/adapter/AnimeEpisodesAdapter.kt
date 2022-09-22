@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
-import com.ankun.AnimeEpisodeVideo
+import com.ankun.anime.AnimeEpisodeVideo
 import com.ankun.R
 import org.apache.commons.lang3.time.DateUtils
 import java.sql.Date
