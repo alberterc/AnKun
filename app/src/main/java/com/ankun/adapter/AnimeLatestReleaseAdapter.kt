@@ -9,7 +9,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
-import com.ankun.AnimeDetails
+import com.ankun.anime.AnimeDetails
 import com.ankun.R
 import com.squareup.picasso.Picasso
 import org.apache.commons.lang3.time.DateUtils
@@ -19,14 +19,16 @@ import java.util.*
 class AnimeLatestReleaseAdapter: RecyclerView.Adapter<AnimeLatestReleaseAdapter.ViewHolder> {
     private var context: Context?
     private var animeList = emptyList<List<String>>()
+    private var mode : String
 
-    constructor(context: Context, animeList: List<List<String>>) {
+    constructor(context: Context, animeList: List<List<String>>, mode: String) {
         this.context = context
         this.animeList = animeList
+        this.mode = mode
     }
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        fun onBind(anime: List<String>) {
+        fun onBind(anime: List<String>, animeMode: String) {
             // get each anime details from anime list
             val title = anime[0].replace("\"", "")
             val thumbnail = anime[4].replace("\"", "")
@@ -77,6 +79,12 @@ class AnimeLatestReleaseAdapter: RecyclerView.Adapter<AnimeLatestReleaseAdapter.
             Picasso.get()
                 .load(thumbnail)
                 .into(animeThumbnail)
+            if (animeMode == "dub") {
+                animeSubText.visibility = View.VISIBLE
+            }
+            else {
+                animeSubText.visibility = View.GONE
+            }
 
             // make each anime item clickable to show anime details
             animeCardView.setOnClickListener {
@@ -90,16 +98,17 @@ class AnimeLatestReleaseAdapter: RecyclerView.Adapter<AnimeLatestReleaseAdapter.
         private val animeThumbnail: ImageView = itemView.findViewById(R.id.anime_thumbnail)
         private val animeEpisodeNum: TextView = itemView.findViewById(R.id.anime_episode_num)
         private val animeEpisodeReleaseTime: TextView = itemView.findViewById(R.id.anime_episode_release_time)
+        private val animeSubText: TextView = itemView.findViewById(R.id.is_dub_text)
         private val animeCardView: CardView = itemView.findViewById(R.id.anime_item)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view: View = LayoutInflater.from(parent.context).inflate(R.layout.item_anime, parent, false)
+        val view: View = LayoutInflater.from(parent.context).inflate(R.layout.item_anime_detailed, parent, false)
         return ViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.onBind(animeList[position])
+        holder.onBind(animeList[position], mode)
     }
 
     override fun getItemCount(): Int {
