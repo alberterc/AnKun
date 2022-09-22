@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-            android:id="@+id/seasonal_release"
-            android:title="Seasons"
-            app:showAsAction="never"
+        android:id="@+id/sub_release"
+        android:title="Subbed"
+        app:showAsAction="never"
+    />
+    <item
+        android:id="@+id/dub_release"
+        android:title="Dubbed"
+        app:showAsAction="never"
     />
 </menu>
