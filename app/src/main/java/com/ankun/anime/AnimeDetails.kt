@@ -1,9 +1,10 @@
-package com.ankun
+package com.ankun.anime
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.ankun.R
 
 class AnimeDetails : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
