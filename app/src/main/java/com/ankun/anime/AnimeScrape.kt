@@ -1,4 +1,4 @@
-package com.ankun
+package com.ankun.anime
 
 import android.app.Activity
 import android.os.AsyncTask
@@ -6,9 +6,11 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.ankun.R
 import com.ankun.adapter.AnimeEpisodesAdapter
 import com.ankun.adapter.AnimeGenreAdapter
 import com.ankun.adapter.AnimeLatestReleaseAdapter
+import com.ankun.adapter.AnimeSearchResultAdapter
 import com.google.android.exoplayer2.ExoPlayer
 import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.trackselection.DefaultTrackSelector
@@ -27,9 +29,11 @@ class AnimeScrape(context: Activity) {
     private var animeEpisodesList: List<List<String>> = mutableListOf()
     lateinit var vidPlayer: ExoPlayer
 
-    inner class GetLatestList : AsyncTask<Void, Void, Void>() {
-        private var latestListPage = "1" // anime list page starts from 1
-        private var latestListMode = "sub" // anime type: "sub" or "dub"
+    inner class GetLatestList (page: String = "1", mode: String = "sub") : AsyncTask<Void, Void, Void>() {
+        // page = 1,2,3,... (if available)
+        // mode: sub or dub
+        private var latestListPage = page
+        private var latestListMode = mode
         private var urlLatestListData = baseUrl + "public-api/index.php?page=${latestListPage}&mode=${latestListMode}"
         private var animeLatestList: List<List<String>> = mutableListOf()
 
@@ -52,11 +56,11 @@ class AnimeScrape(context: Activity) {
         override fun onPostExecute(result: Void?) {
             super.onPostExecute(result)
             val animeLatestListRv: RecyclerView = activityReference.get()!!.findViewById(R.id.anime_list)
-            animeLatestListRv.adapter = AnimeLatestReleaseAdapter(activityReference.get()!!.applicationContext, animeLatestList)
+            animeLatestListRv.removeAllViewsInLayout()
+            animeLatestListRv.adapter = AnimeLatestReleaseAdapter(activityReference.get()!!.applicationContext, animeLatestList, latestListMode)
         }
 
     }
-
     inner class GetAnimeDetails(animeID: String) : AsyncTask<Void, Void, Void>() {
         private var urlAnimeDetails = baseUrl + animeID
         private var urlAnimeEpisodes = baseUrl + "public-api/episodes.php?id=${animeID}"
@@ -151,10 +155,9 @@ class AnimeScrape(context: Activity) {
         }
 
     }
-
     inner class GetEpisodeVideoStream(episodeID: String, anime: String, animeID: String) : AsyncTask<Void, Void, Void>() {
-        private var urlEpisodeLinks = baseUrl + "public-api/episode.php?id=${episodeID}"
-        private var urlAnimeEpisodes = baseUrl + "public-api/episodes.php?id=${animeID}"
+        private val urlEpisodeLinks = baseUrl + "public-api/episode.php?id=${episodeID}"
+        private val urlAnimeEpisodes = baseUrl + "public-api/episodes.php?id=${animeID}"
         private var episodeDetailsList: MutableList<String> = mutableListOf()
         private var episodeDetailsMap: MutableMap<String, String> = mutableMapOf()
         private val animeTitle = anime
@@ -167,6 +170,7 @@ class AnimeScrape(context: Activity) {
                 .replace("\\", "")
                 .replace("[", "")
                 .replace("]", "")
+
             // convert from String into List of List
             // [[UNKNOWN, EPISODE ID, EPISODE NUMBER, EPISODE RELEASE TIME]]
             animeEpisodesList = animeEpisodesJSONStr
@@ -250,6 +254,55 @@ class AnimeScrape(context: Activity) {
             episodeRecyclerView.layoutManager = GridLayoutManager(ctxRef.applicationContext, 2)
             episodeRecyclerView.adapter =
                 AnimeEpisodesAdapter(ctxRef.applicationContext, animeEpisodesList, animeTitle, mAnimeID)
+        }
+    }
+    inner class GetAnimeSearchResult
+        (search: String, season: String = "", genres: String = "", dub: String = "", airing: String = "", sort: String = "popular-week", page: String = "1")
+        : AsyncTask<Void, Void, Void>(){
+        // season = "" (any), spring-2022, summer-2022, winter-2022, fall-2021, etc
+        // genres = "" (any), action, dementia, fantasy, etc (more than 1 can be selected)
+        // dub = "" (all), 0 (subbed), 1 (dubbed), 2 (chinese)
+        // airing = "" (all), 1 (ongoing), 0 (completed)
+        // sort = popular-week, popular-year, az, za, ranking
+        // page = any number (1-10 if available)
+
+        private val mSearch = search
+        private val mSeason = season
+        private val mGenres = genres
+        private val mDub = dub
+        private val mAiring = airing
+        private val mSort = sort
+        private val mPage = page
+        private val urlAnimeSearch =
+            baseUrl + "public-api/search.php?search_text=${mSearch}&season=${mSeason}&genres=${mGenres}&dub=${mDub}&airing=${mAiring}&sort=${mSort}&page=${mPage}"
+        private var searchResultList: List<List<String>> = mutableListOf()
+
+        override fun doInBackground(vararg params: Void?): Void? {
+            // get anime search result data from JSON response
+            // retrieves JSON response in String data type
+            val animeSearchListJSONStr = URL(urlAnimeSearch).readText()
+                .replace("\\", "")
+                .replace("[", "")
+                .replace("]", "")
+            // convert from String into List of List
+            // [[Anime Title, Anime ID, ANIME THUMBNAIL, SUB OR DUB (sub=0, dub=1]]
+            searchResultList = animeSearchListJSONStr
+                .split(",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*\$)".toRegex())
+                .chunked(4)
+3
+            return null
+        }
+
+        override fun onPostExecute(result: Void?) {
+            super.onPostExecute(result)
+
+            val searchText: TextView = activityReference.get()!!.findViewById(R.id.search_text)
+            searchText.text = mSearch
+
+            val searchResultRv: RecyclerView = activityReference.get()!!.findViewById(R.id.anime_list)
+            searchResultRv.removeAllViewsInLayout()
+            searchResultRv.adapter =
+                AnimeSearchResultAdapter(activityReference.get()!!.applicationContext, searchResultList)
         }
     }
 }
