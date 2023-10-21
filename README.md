@@ -13,6 +13,6 @@ The app grabs the data from an API database (JSON response) for all the anime an
 - [ExoPlayer](https://exoplayer.dev/)
 
 # Developer
-Albert E (vradnisntlong@gmail.com)
+Albert E (albertenrico.5@gmail.com)
 
 All rights reserved.
