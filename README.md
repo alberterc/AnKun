@@ -12,7 +12,4 @@ The app grabs the data from an API database (JSON response) for all the anime an
 - [Jsoup](https://jsoup.org/)
 - [ExoPlayer](https://exoplayer.dev/)
 
-# Developer
-Albert E (albertenrico.5@gmail.com)
-
 All rights reserved.
