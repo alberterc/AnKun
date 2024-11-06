@@ -1,4 +1,7 @@
 # AnKun
+
+***The API used is not maintained by me and may cause issues.***
+
 AnKun is a simple app to stream anime.
 
 *"Used for educational purposes to learn about web scraping, JSON response API, HTTP Live Streaming, and using exoplayer."*
