@@ -1,3 +1,6 @@
+## Notice
+This scrapes `https://animension.to` which at the time of writing this, it no longer exists/reachable.
+
 # AnKun
 
 ***The API used is not maintained by me and may cause issues.***
